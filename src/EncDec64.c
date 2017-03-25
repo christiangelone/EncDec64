@@ -16,16 +16,11 @@ int main(int argc, char *argv[]) {
 	fill_options_list(argc,argv);
 	options * opts = get_options_list();
 
-	while(opts != NULL){
-		puts("Key:");
-		puts(opts->opt.key);
-		puts("Value:");
-		if(opts->opt.value != NULL){
-			puts(opts->opt.value);
-		}else{
-			puts("NULL");
-		}
-		opts = opts->next;
+	int i = 0;
+	while(i < size_of_options_list()){
+		option opt = get_option_from_options_list(i);
+		printf("(Key: %s,Value: %s)\n",opt.key,opt.value);
+		i++;
 	}
 
 	//-------------------------------------

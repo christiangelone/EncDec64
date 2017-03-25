@@ -58,6 +58,26 @@ options * get_options_list(){
 	return head;
 }
 
+int size_of_options_list(){
+	options * tmp = head;
+	int i = 0;
+	while(tmp != NULL){
+		tmp = tmp->next;
+		i++;
+	}
+	return i;
+}
+
+option get_option_from_options_list(int index){
+	options * tmp = head;
+	int	i = 0;
+	while(tmp != NULL && i < index ){
+		tmp = tmp->next;
+		i++;
+	}
+	return tmp->opt;
+}
+
 void delete_options_list(){
 	while(head != NULL){
 		options * tmp = head;
