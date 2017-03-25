@@ -10,7 +10,6 @@
 
 const char * VERSION = "1.0";
 
-
 const char * HELP = " Usage: \n \
    tp0 -h \n \
    tp0 -V \n \

@@ -36,7 +36,11 @@ int optcmp_value(option opta,option optb){
 }
 
 int optcmp(option opta,option optb){
-	return (strcmp(opta.key,optb.key) == 0 && strcmp(opta.value,optb.value) == 0);
+	if(opta.key == NULL || opta.value == NULL){
+		return 0;
+	}else{
+		return (strcmp(opta.key,optb.key) == 0 && strcmp(opta.value,optb.value) == 0);
+	}
 }
 
 #endif /* OPTIONS_H_ */

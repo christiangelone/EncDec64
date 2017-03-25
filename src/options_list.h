@@ -96,6 +96,10 @@ int is_option_key_present_in_options_list(option opt){
 	return is_present;
 }
 
+int is_empty_options_list(){
+	return head == NULL;
+}
+
 void delete_options_list(){
 	while(head != NULL){
 		options * tmp = head;

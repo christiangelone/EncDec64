@@ -8,33 +8,43 @@
  ============================================================================
  */
 #include "actions.h"
-#include "options_list.h"
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
 
 	fill_options_list(argc,argv);
 
-	if(!is_option_key_present_in_options_list(OPT_DECODE)){
+	if(is_empty_options_list()){
 		add_option_to_front_of_options_list(OPT_DECODE);
 	}
 
-	if(wants_to_encode_from_std_to_std){
+	analize_options();
 
-	}else
-	if(wants_to_encode_from_std_to_std){
+	if(wants_to_decode_from_istd_to_ostd){
+		char istd[1024];
+		scanf("%1024s",istd);
+		printf("%s\n",istd);
+		puts("Executing char * decode(char * string) with istd bytes");
+		puts("Printing char * to ostd");
 
-	}else
-	if(wants_to_decode_from_file_to_file){
+	}else if(wants_to_encode_from_istd_to_ostd){
+		puts("Executing char * encode(char * string) with istd bytes");
+		puts("Printing char * to ostd");
 
-	}else
-	if(wants_to_decode_from_file_to_file){
+	}else if(wants_to_decode_from_ifile_to_ofile){
+		puts("Reading ifile bytes...");
+		puts("Executing char * encode(char * string) with ifile bytes...");
+		puts("Writing char * to ofile");
 
-	}else
-	if(wants_to_see_version){
+	}else if(wants_to_decode_from_ifile_to_ofile){
+		puts("Reading ifile bytes...");
+		puts("Executing char * decode(char * string) with ifile bytes...");
+		puts("Writing char * to ofile");
+
+	}else if(wants_to_see_version){
 		puts(VERSION);
-	}else
-	if(wants_to_see_help || this_guy_is_an_idiot){
+
+	}else if(wants_to_see_help || this_guy_is_an_idiot){
 		puts(HELP);
 	}
 
