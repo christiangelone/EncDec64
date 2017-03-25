@@ -96,6 +96,22 @@ int is_option_key_present_in_options_list(option opt){
 	return is_present;
 }
 
+char * get_option_value_from_options_list(option opt){
+
+	char * value = NULL;
+
+	int i = 0;
+	while(i < size_of_options_list()){
+		option opt_from_list = get_option_from_options_list(i);
+		if(optcmp_key(opt_from_list,opt)){
+			value = opt_from_list.value;
+			return value;
+		}
+		i++;
+	}
+	return value;
+}
+
 int is_empty_options_list(){
 	return head == NULL;
 }

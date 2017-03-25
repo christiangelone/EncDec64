@@ -8,6 +8,7 @@
  ============================================================================
  */
 #include "actions.h"
+#include "encdec.h"
 #include <stdlib.h>
 
 int main(int argc, char *argv[]) {
@@ -15,30 +16,57 @@ int main(int argc, char *argv[]) {
 	fill_options_list(argc,argv);
 
 	if(is_empty_options_list()){
-		add_option_to_front_of_options_list(OPT_DECODE);
+		add_option_to_front_of_options_list(OPT_ENCODE);
 	}
 
 	analize_options();
 
 	if(wants_to_decode_from_istd_to_ostd){
+
 		char istd[1024];
 		scanf("%1024s",istd);
-		printf("%s\n",istd);
-		puts("Executing char * decode(char * string) with istd bytes");
-		puts("Printing char * to ostd");
+		char * decoded = decode64(istd,strlen(istd),NULL);
+		printf("%s",decoded);
+
+		//puts("Decoding...");
+		//puts("Printing char * to ostd");
 
 	}else if(wants_to_encode_from_istd_to_ostd){
-		puts("Executing char * encode(char * string) with istd bytes");
-		puts("Printing char * to ostd");
+
+		char istd[1024];
+		scanf("%1024s",istd);
+		char * encoded = encode64(istd,strlen(istd));
+		printf("%s",encoded);
+
+		//puts("Encoding...");
+		//puts("Printing char * to ostd");
 
 	}else if(wants_to_decode_from_ifile_to_ofile){
+
+		char * ifilename = get_option_value_from_options_list(OPT_INPUT);
+		if(ifilename == NULL) ifilename = get_option_value_from_options_list(OPT_INPUT_);
+
+		char * ofilename = get_option_value_from_options_list(OPT_OUTPUT);
+		if(ofilename == NULL) ofilename = get_option_value_from_options_list(OPT_OUTPUT_);
+
+		printf("(ifile: %s, ofile: %s)\n",ifilename,ofilename);
+
 		puts("Reading ifile bytes...");
-		puts("Executing char * encode(char * string) with ifile bytes...");
+		puts("Decoding...");
 		puts("Writing char * to ofile");
 
-	}else if(wants_to_decode_from_ifile_to_ofile){
+	}else if(wants_to_encode_from_ifile_to_ofile){
+
+		char * ifilename = get_option_value_from_options_list(OPT_INPUT);
+		if(ifilename == NULL) ifilename = get_option_value_from_options_list(OPT_INPUT_);
+
+		char * ofilename = get_option_value_from_options_list(OPT_OUTPUT);
+		if(ofilename == NULL) ofilename = get_option_value_from_options_list(OPT_OUTPUT_);
+
+		printf("(ifile: %s, ofile: %s)\n",ifilename,ofilename);
+
 		puts("Reading ifile bytes...");
-		puts("Executing char * decode(char * string) with ifile bytes...");
+		puts("Encoding...");
 		puts("Writing char * to ofile");
 
 	}else if(wants_to_see_version){
@@ -46,6 +74,8 @@ int main(int argc, char *argv[]) {
 
 	}else if(wants_to_see_help || this_guy_is_an_idiot){
 		puts(HELP);
+	}else{
+		puts("ALGO PASO!");
 	}
 
 	delete_options_list();
