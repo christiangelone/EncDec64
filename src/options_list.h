@@ -8,14 +8,7 @@
 #ifndef LIST_H_
 #define LIST_H_
 
-#include <stdio.h>
-#include <stdlib.h>
-//hay que probar este intento de lista
-
-typedef struct{
-	char * key;
-	char * value;
-} option;
+#include "options.h"
 
 typedef struct options {
     option opt;
@@ -24,9 +17,17 @@ typedef struct options {
 
 options * head = NULL;
 options * current = NULL;
-int initialized = 0;
 
-void add_option_to_options_list(option opt){
+void add_option_to_front_of_options_list(option opt){
+
+	options * new = (struct options *) malloc(sizeof(options));
+	new->opt = opt;
+
+	new->next = head;
+	head = new;
+}
+
+void add_option_to_rear_of_options_list(option opt){
 
 	options * new = (struct options *) malloc(sizeof(options));
 	new->opt = opt;
@@ -36,6 +37,7 @@ void add_option_to_options_list(option opt){
 		head = current = new;
 	}else{
 		current->next = new;
+		current = new;
 	}
 }
 
@@ -49,7 +51,7 @@ void fill_options_list(int argc, char *argv[]){
 		}else{
 			opt.value = NULL;
 		}
-		add_option_to_options_list(opt);
+		add_option_to_rear_of_options_list(opt);
 		i += 2;
 	}
 }
@@ -68,6 +70,7 @@ int size_of_options_list(){
 	return i;
 }
 
+
 option get_option_from_options_list(int index){
 	options * tmp = head;
 	int	i = 0;
@@ -76,6 +79,21 @@ option get_option_from_options_list(int index){
 		i++;
 	}
 	return tmp->opt;
+}
+
+int is_option_key_present_in_options_list(option opt){
+	int is_present = 0;
+
+	int i = 0;
+	while(i < size_of_options_list()){
+		option opt_from_list = get_option_from_options_list(i);
+		if(optcmp_key(opt_from_list,opt)){
+			is_present = 1;
+			return is_present;
+		}
+		i++;
+	}
+	return is_present;
 }
 
 void delete_options_list(){
