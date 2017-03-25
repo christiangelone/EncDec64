@@ -11,20 +11,29 @@
 #include "options_list.h"
 #include <stdlib.h>
 
-int main(void) {
+int main(int argc, char *argv[]) {
 
-	option opt1;
-	opt1.key = "-h";
-	opt1.value = NULL;
-
-	add_option_to_option_list(opt1);
-
-	options * opts = get_option_list();
+	fill_options_list(argc,argv);
+	options * opts = get_options_list();
 
 	while(opts != NULL){
+		puts("Key:");
 		puts(opts->opt.key);
+		puts("Value:");
+		if(opts->opt.value != NULL){
+			puts(opts->opt.value);
+		}else{
+			puts("NULL");
+		}
 		opts = opts->next;
 	}
+
+	//-------------------------------------
+		delete_options_list();
+
+	puts("-------------------------------");
+	puts("           FINISHED            ");
+	puts("-------------------------------");
 
 	return EXIT_SUCCESS;
 }

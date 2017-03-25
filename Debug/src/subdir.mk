@@ -4,13 +4,16 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../src/EncDec64bit.c 
+../src/EncDec64.c \
+../src/encdec.c 
 
 OBJS += \
-./src/EncDec64bit.o 
+./src/EncDec64.o \
+./src/encdec.o 
 
 C_DEPS += \
-./src/EncDec64bit.d 
+./src/EncDec64.d \
+./src/encdec.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

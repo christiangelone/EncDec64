@@ -23,19 +23,19 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: EncDec64bit
+all: EncDec64
 
 # Tool invocations
-EncDec64bit: $(OBJS) $(USER_OBJS)
+EncDec64: $(OBJS) $(USER_OBJS)
 	@echo 'Building target: $@'
 	@echo 'Invoking: GCC C Linker'
-	gcc  -o "EncDec64bit" $(OBJS) $(USER_OBJS) $(LIBS)
+	gcc  -o "EncDec64" $(OBJS) $(USER_OBJS) $(LIBS)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) EncDec64bit
+	-$(RM) $(EXECUTABLES)$(OBJS)$(C_DEPS) EncDec64
 	-@echo ' '
 
 .PHONY: all clean dependents
