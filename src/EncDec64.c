@@ -11,6 +11,37 @@
 #include "encdec.h"
 #include <stdlib.h>
 
+int read_from_ifile_write_to_ofile(char* ifile, char* ofile, int action){
+	FILE* inputfp = fopen(ifile,"r");
+	if(inputfp){
+		size_t length = 1024;
+		FILE* outputfp = fopen(ofile,"w");
+		char* line = (char*)malloc(sizeof(char)*length);
+		if(line == NULL){
+			puts("Memory error\n");
+			return -1;
+		}
+		if(outputfp){
+			while(fgets(line, length, inputfp) != NULL){
+				char* result;
+				if(action == 1){
+					result = encode64(line,strlen(line));
+				}else{
+					result = decode64(line,strlen(line),NULL);
+				}
+				fputs(result,outputfp);
+				free(result);
+			}
+		}
+		free(line);
+		fclose(outputfp);
+		fclose(inputfp);
+		return 0;
+	}
+	puts("Error, no input file\n");
+	return -1;
+}
+
 int main(int argc, char *argv[]) {
 
 	fill_options_list(argc,argv);
@@ -27,6 +58,7 @@ int main(int argc, char *argv[]) {
 		scanf("%1024s",istd);
 		char * decoded = decode64(istd,strlen(istd),NULL);
 		printf("%s",decoded);
+		free(decoded);
 
 		//puts("Decoding...");
 		//puts("Printing char * to ostd");
@@ -37,7 +69,7 @@ int main(int argc, char *argv[]) {
 		scanf("%1024s",istd);
 		char * encoded = encode64(istd,strlen(istd));
 		printf("%s",encoded);
-
+		free(encoded);
 		//puts("Encoding...");
 		//puts("Printing char * to ostd");
 
@@ -50,6 +82,8 @@ int main(int argc, char *argv[]) {
 		if(ofilename == NULL) ofilename = get_option_value_from_options_list(OPT_OUTPUT_);
 
 		printf("(ifile: %s, ofile: %s)\n",ifilename,ofilename);
+
+		read_from_ifile_write_to_ofile(ifilename,ofilename,0);
 
 		puts("Reading ifile bytes...");
 		puts("Decoding...");
@@ -64,6 +98,8 @@ int main(int argc, char *argv[]) {
 		if(ofilename == NULL) ofilename = get_option_value_from_options_list(OPT_OUTPUT_);
 
 		printf("(ifile: %s, ofile: %s)\n",ifilename,ofilename);
+
+		read_from_ifile_write_to_ofile(ifilename,ofilename,1);
 
 		puts("Reading ifile bytes...");
 		puts("Encoding...");
