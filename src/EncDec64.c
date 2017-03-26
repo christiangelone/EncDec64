@@ -10,6 +10,7 @@
 #include "actions.h"
 #include "encdec.h"
 #include <stdlib.h>
+#include <string.h>
 
 int read_from_ifile_write_to_ofile(char* ifile, char* ofile, int action){
 	FILE* inputfp = fopen(ifile,"r");
